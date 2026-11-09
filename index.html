@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NumanX Experiments</title>
+  <meta name="description" content="Small machine learning and web experiments by NumanX Studio. Everything runs in your browser.">
+  <link rel="stylesheet" href="assets/site.css">
+  <style>
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 8px; }
+    .exp { display: block; padding: 20px; text-decoration: none; color: var(--ink); transition: border-color .15s; }
+    .exp:hover { border-color: var(--muted); }
+    .exp .tag { display: inline-block; font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 999px; margin-bottom: 12px; }
+    .exp p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
+    .exp .meta { font: 13px var(--mono); color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
+    .exp.soon { border-style: dashed; color: var(--muted); }
+    .exp.soon:hover { border-color: var(--line); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="./">NumanX <small>Experiments</small></a>
+      <nav><a href="https://numanxstudio.com">numanxstudio.com</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Lab</p>
+      <h1>Experiments</h1>
+      <p class="lead">Small machine learning and web projects. They run entirely in your browser: nothing you try here is uploaded anywhere.</p>
+    </section>
+
+    <section class="grid" aria-label="Experiments">
+      <a class="card exp" href="cat-vs-dog/">
+        <span class="tag">Image AI</span>
+        <h2>Cat vs Dog Classifier</h2>
+        <p>Upload a photo or use your camera, and a neural network tells you if it sees a cat or a dog.</p>
+        <div class="meta"><span>EfficientNet-B0</span><span>98.8% test accuracy</span></div>
+      </a>
+      <div class="card exp soon" aria-hidden="true">
+        <span class="tag">Coming next</span>
+        <h2>More soon</h2>
+        <p>New experiments will appear here.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© NumanX Studio</span>
+      <span>Runs on your device. No tracking, no uploads.</span>
+    </div>
+  </footer>
+</body>
+</html>

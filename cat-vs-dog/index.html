@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cat vs Dog Classifier · NumanX Experiments</title>
+  <meta name="description" content="Upload a photo or use your camera and an EfficientNet-B0 neural network tells you if it is a cat or a dog. 98.8% test accuracy. Runs fully in your browser.">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="../">NumanX <small>Experiments</small></a>
+      <nav><a href="../">All experiments</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Image AI · Transfer learning</p>
+      <h1>Cat or dog?</h1>
+      <p class="lead">Show it a photo and a neural network decides. It runs entirely on your device, so your photos never leave it.</p>
+    </section>
+
+    <section class="tool card" aria-label="Classifier">
+      <div class="stage">
+        <div id="drop" class="drop" tabindex="0" aria-describedby="drop-hint">
+          <img id="preview" alt="" hidden>
+          <video id="video" playsinline muted hidden></video>
+          <div id="drop-empty" class="drop-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>
+            <p><strong>Drop a photo here</strong></p>
+            <p id="drop-hint" class="muted">or use the buttons below. You can also paste an image.</p>
+          </div>
+        </div>
+        <div class="actions">
+          <label class="btn primary" for="file" id="file-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 20h16"/></svg>
+            Upload photo
+          </label>
+          <input id="file" class="sr-only" type="file" accept="image/*">
+          <button class="btn" id="cam" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            <span id="cam-text">Use camera</span>
+          </button>
+          <button class="btn" id="flip" type="button" hidden>Switch camera</button>
+        </div>
+      </div>
+
+      <div class="result" aria-live="polite">
+        <p class="eyebrow" style="color: var(--muted)">Prediction</p>
+        <div id="status" class="status">Loading the model…</div>
+        <div id="progress" class="progress" role="progressbar" aria-label="Model download" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+
+        <div id="answer" class="answer" hidden>
+          <div id="label" class="label">—</div>
+          <div id="conf" class="conf mono">—</div>
+          <div class="meter" aria-hidden="true">
+            <div class="meter-track"><div id="meter-fill" class="meter-fill"></div><div id="meter-pin" class="meter-pin"></div></div>
+            <div class="meter-legend mono"><span>Cat <b id="pcat">–</b></span><span><b id="pdog">–</b> Dog</span></div>
+          </div>
+          <p id="note" class="note" hidden></p>
+          <p id="timing" class="timing mono muted"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="info">
+      <div class="card block">
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li><b>Resize.</b> Your photo is shrunk to 160 × 160 pixels: 76,800 numbers.</li>
+          <li><b>See.</b> EfficientNet-B0, a network pretrained on over a million ImageNet photos, turns it into 1,280 numbers describing what it sees: fur, ears, eyes, face shape.</li>
+          <li><b>Decide.</b> A single trained neuron weighs those 1,280 numbers and outputs the probability of "dog".</li>
+          <li><b>Answer.</b> Above 50% means dog; below means cat.</li>
+        </ol>
+      </div>
+      <div class="card block">
+        <h2>About the model</h2>
+        <dl class="facts">
+          <div><dt>Architecture</dt><dd>EfficientNet-B0 (frozen) + 1 sigmoid neuron</dd></div>
+          <div><dt>Trained on</dt><dd class="mono">18,610 photos</dd></div>
+          <div><dt>Test accuracy</dt><dd class="mono">98.80% on 2,326 unseen photos</dd></div>
+          <div><dt>ROC AUC</dt><dd class="mono">0.9986</dd></div>
+          <div><dt>Download size</dt><dd class="mono">≈ 16 MB, once</dd></div>
+          <div><dt>Runs on</dt><dd>Your device, with TensorFlow.js</dd></div>
+        </dl>
+      </div>
+      <div class="card block">
+        <h2>Good to know</h2>
+        <ul class="steps">
+          <li>It only knows <b>two</b> answers. Show it a person or a car and it will still pick cat or dog.</li>
+          <li>Works best when one animal is clearly visible and fills much of the photo.</li>
+          <li>Hard cases: tiny animals far away, very dark cats, fluffy small dogs, and photos with both a cat and a dog.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© NumanX Studio · A student machine learning project</span>
+      <span>No uploads. No tracking. Your photos stay on your device.</span>
+    </div>
+  </footer>
+
+  <canvas id="canvas" width="160" height="160" hidden></canvas>
+  <script src="../assets/tf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
