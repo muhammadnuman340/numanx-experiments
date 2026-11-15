@@ -1,0 +1,47 @@
+{
+  "class_names": [
+    "butterfly",
+    "cat",
+    "chicken",
+    "cow",
+    "dog",
+    "elephant",
+    "horse",
+    "sheep",
+    "spider",
+    "squirrel",
+    "human",
+    "unknown_animal",
+    "not_animal_or_human"
+  ],
+  "display_names": {
+    "butterfly": "Butterfly",
+    "cat": "Cat",
+    "chicken": "Chicken",
+    "cow": "Cow",
+    "dog": "Dog",
+    "elephant": "Elephant",
+    "horse": "Horse",
+    "sheep": "Sheep",
+    "spider": "Spider",
+    "squirrel": "Squirrel",
+    "human": "Human",
+    "unknown_animal": "Unknown animal (not one of my 10)",
+    "not_animal_or_human": "Not a real animal or human (object, scene or drawing)"
+  },
+  "img_size": [
+    224,
+    224
+  ],
+  "temperature": 1.25,
+  "confidence_threshold": 0.7,
+  "similarity_threshold": 0.5447375774383545,
+  "unknown_classes": [
+    "unknown_animal",
+    "not_animal_or_human"
+  ],
+  "human_ratio": 0.6,
+  "rule": "p = softmax(log(probs)/T). If argmax is an animal/unknown_animal and p[human] >= human_ratio * max(p) -> human. If argmax is human -> human (never rejected). Else if argmax is unknown_animal/not_animal -> that. Else if max(p) < confidence_threshold or max cosine similarity of the 'gap' embedding to the bank < similarity_threshold -> unknown_animal if p[unknown_animal] >= p[not_animal] else not_animal. Else argmax.",
+  "preprocessing": "RGB, EXIF-rotated, 224x224 bilinear, raw 0-255 values; scaling to [-1,1] is inside the model.",
+  "embedding_layer": "gap"
+}

@@ -16,6 +16,8 @@
     .exp .meta { font: 13px var(--mono); color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
     .exp.soon { border-style: dashed; color: var(--muted); }
     .exp.soon:hover { border-color: var(--line); }
+    .exp .go { display: inline-block; margin-top: 14px; font-weight: 600; font-size: 15px; color: var(--accent); }
+    .exp:hover .go { text-decoration: underline; text-underline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -24,8 +26,8 @@
       <a class="brand" href="./">NumanX <small>Experiments</small></a>
       <nav aria-label="Experiments">
         <a href="./" aria-current="page">All experiments</a>
-        <a href="./cat-vs-dog/">Cat vs Dog</a>
-        <a href="./animal-classifier/">Animals + Human</a>
+        <a href="./animal-classifier/">Try it</a>
+        <a href="./animal-classifier/report/">Report</a>
         <a href="https://numanxstudio.com">numanxstudio.com</a>
       </nav>
     </div>
@@ -39,17 +41,12 @@
     </section>
 
     <section class="grid" aria-label="Experiments">
-      <a class="card exp" href="cat-vs-dog/">
-        <span class="tag">Image AI</span>
-        <h2>Cat vs Dog Classifier</h2>
-        <p>Upload a photo or use your camera, and a neural network tells you if it sees a cat or a dog.</p>
-        <div class="meta"><span>EfficientNet-B0</span><span>98.8% test accuracy</span></div>
-      </a>
       <a class="card exp" href="animal-classifier/">
-        <span class="tag">Image AI</span>
+        <span class="tag">Image AI · Live demo</span>
         <h2>Animals + Human Classifier</h2>
-        <p>Recognises 10 animals and humans, says "Unknown" for everything else, and explains every answer. Stress-tested on pictures it has never seen.</p>
+        <p>Upload a photo or use your camera. It recognises 10 animals and humans, says "Unknown" for everything else, and explains every answer.</p>
         <div class="meta"><span>MobileNetV2</span><span>94.8% test accuracy</span><span>13 classes</span></div>
+        <span class="go">Try it live →</span>
       </a>
       <div class="card exp soon" aria-hidden="true">
         <span class="tag">Coming next</span>
