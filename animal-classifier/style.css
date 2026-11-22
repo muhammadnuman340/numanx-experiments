@@ -1,18 +1,17 @@
 /* Live demo for the Animals + Human classifier. Layout follows the earlier Cat vs Dog demo. */
-:root { --yes: var(--ok); --no: #b91c1c; }
-@media (prefers-color-scheme: dark) { :root { --no: #f87171; } }
+:root { --yes: var(--ok); }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
 .hero-actions .btn { text-decoration: none; }
 
-.tool { display: grid; grid-template-columns: 1fr 1.1fr; overflow: hidden; }
+.tool { display: grid; grid-template-columns: 1fr 1.1fr; overflow: hidden; box-shadow: var(--shadow-float); }
 .stage { padding: 18px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .drop {
-  position: relative; aspect-ratio: 4 / 3; border: 1.5px dashed var(--line); border-radius: 12px;
-  background: var(--bg); display: grid; place-items: center; overflow: hidden; transition: border-color .15s, background .15s;
+  position: relative; aspect-ratio: 4 / 3; border: 2px dashed #cfcfc8; border-radius: var(--radius);
+  background: var(--soft); display: grid; place-items: center; overflow: hidden; transition: border-color .15s, background .15s;
 }
-.drop:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.drop.over { border-color: var(--ink); background: var(--accent-soft); }
 .drop.filled { border-style: solid; }
 /* Pinned to the box so the WHOLE photo always fits (portrait, square or wide), letterboxed, never cropped. */
 .drop img, .drop video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; background: #000; }
@@ -25,12 +24,12 @@
 .result-eyebrow { color: var(--muted); }
 .status { color: var(--muted); font-size: 15px; }
 .status.error { color: var(--no); }
-.progress { height: 4px; border-radius: 99px; background: var(--line); margin-top: 12px; overflow: hidden; }
-.progress span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.progress { height: 8px; border-radius: 99px; background: var(--line); margin-top: 12px; overflow: hidden; }
+.progress span { display: block; height: 100%; width: 0; background: var(--ink); border-radius: inherit; transition: width .2s; }
 .progress.done { display: none; }
 
 .answer { margin-top: 4px; }
-.label { font-size: clamp(36px, 7vw, 52px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; overflow-wrap: anywhere; }
+.label { font-family: var(--font-display); font-size: clamp(36px, 7vw, 56px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; overflow-wrap: anywhere; }
 .label.known { color: var(--yes); }
 .label.unknown { color: var(--no); font-size: clamp(24px, 4.2vw, 32px); letter-spacing: -0.02em; line-height: 1.15; }
 .conf { margin-top: 8px; font-size: 15px; color: var(--muted); }
@@ -51,8 +50,8 @@
 .bar-legend .dash { display: inline-block; width: 0; height: 14px; border-left: 2px dashed var(--ink); opacity: .7; }
 
 .why { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; }
-.why summary { cursor: pointer; font-weight: 600; font-size: 15px; }
-.why summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.why summary { cursor: pointer; font: 700 16px var(--font-display); }
+.why summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
 .reasons { margin: 10px 0 0; padding-left: 20px; font-size: 14px; color: var(--muted); }
 .reasons li { margin: 0 0 8px; }
 .reasons b { color: var(--ink); }
@@ -61,13 +60,13 @@
 .tool-note { margin: 14px 2px 0; font-size: 14px; color: var(--muted); max-width: 760px; }
 
 .info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
-.block { padding: 20px; }
+.block { padding: 22px; }
 .steps { margin: 0; padding-left: 20px; color: var(--muted); font-size: 15px; }
 .steps li { margin: 0 0 8px; }
 .steps b { color: var(--ink); }
 .facts { margin: 0; display: grid; gap: 10px; font-size: 14px; }
 .facts div { display: grid; gap: 2px; }
-.facts dt { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+.facts dt { color: var(--muted); font-size: 13px; font-weight: 500; }
 .facts dd { margin: 0; }
 
 @media (max-width: 860px) {
@@ -80,3 +79,7 @@
   .actions .btn { flex: 1 1 auto; justify-content: center; }
   .bar-row { grid-template-columns: minmax(0, 7.5em) 1fr 3.4em; }
 }
+
+/* NumanX: the in-tool "Prediction" label is a plain label, not a hero eyebrow pill */
+.result-eyebrow { background: none; border: 0; padding: 0; margin: 0 0 8px; font: 600 13px var(--sans); }
+.result-eyebrow::before { display: none; }
