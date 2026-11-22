@@ -17,21 +17,23 @@
       background: radial-gradient(circle, rgba(17,17,17,.13) 1.3px, transparent 1.6px) 0 0 / 18px 18px, linear-gradient(150deg, #ffd447, #ffbf00); }
     .float { background: #fff; color: #111; border-radius: 16px; box-shadow: var(--shadow-float); padding: 16px 18px; }
     .float.tilt { transform: rotate(-1.2deg); }
-    .pred { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; align-items: center; }
-    .pred svg { width: 112px; height: 112px; display: block; border-radius: 12px; background: #fff8df; }
-    .pred small { display: block; color: #5c5c5c; font: 600 13px var(--sans); }
-    .pred strong { display: block; font: 900 40px/1 var(--font-display); letter-spacing: -.03em; color: #157a3f; margin: 2px 0 6px; }
-    .pred em { font: 500 13px var(--mono); color: #5c5c5c; font-style: normal; }
-    .rows { display: grid; gap: 7px; margin-top: 14px; font-size: 13px; }
-    .row { display: grid; grid-template-columns: 82px minmax(0, 1fr) 46px; gap: 10px; align-items: center; }
-    .row i { height: 9px; border-radius: 99px; background: #ececea; display: block; overflow: hidden; }
-    .row i b { display: block; height: 100%; border-radius: inherit; background: #8c8c86; }
-    .row.top i b { background: #157a3f; }
-    .row span:last-child { text-align: right; font-family: var(--mono); color: #5c5c5c; }
-    .chip { display: flex; align-items: center; gap: 10px; margin-left: 32px; font-size: 14px; }
-    .chip span.ic { width: 34px; height: 34px; border-radius: 10px; background: #111; color: #ffc414; display: grid; place-items: center; flex: none; }
-    .chip b { display: block; font: 700 14px var(--font-display); }
-    .chip small { color: #5c5c5c; font-size: 12px; }
+    .lab-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .lab-tag { font: 700 12px var(--font-display); background: #ffc414; color: #111; padding: 3px 9px; border-radius: 8px; }
+    .live { display: inline-flex; align-items: center; gap: 6px; font: 600 12px var(--sans); color: #157a3f; }
+    .live i { width: 8px; height: 8px; border-radius: 50%; background: #157a3f; }
+    .lab-title { display: block; font: 800 20px/1.15 var(--font-display); letter-spacing: -.02em; margin: 10px 0 12px; }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .stats div { background: #fafaf8; border: 1px solid #ececea; border-radius: 12px; padding: 10px; }
+    .stats div:first-child { background: #fff8df; border-color: #ffe08a; }
+    .stats strong { display: block; font: 900 24px/1 var(--font-display); letter-spacing: -.02em; color: #111; }
+    .stats small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.3; color: #5c5c5c; }
+    .float.code { background: #111; color: #e9e6dc; margin-left: 28px; padding: 0; overflow: hidden; }
+    .float.code pre { margin: 0; padding: 14px 16px; font: 12.5px/1.6 var(--mono); white-space: pre; overflow-x: auto; }
+    .code .c { color: #8c8c86; } .code .k { color: #ffd447; } .code .s { color: #8fd19e; }
+    .float.next { display: flex; align-items: center; gap: 12px; margin-right: 40px; border: 2px dashed #8c8c86; box-shadow: none; background: rgba(255,255,255,.85); }
+    .next .ic { width: 34px; height: 34px; border-radius: 10px; background: #111; color: #ffc414; display: grid; place-items: center; flex: none; }
+    .next b { display: block; font: 700 14px var(--font-display); }
+    .next small { color: #5c5c5c; font-size: 13px; }
     .demo { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
 
     .section-head { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 28px 0 18px; }
@@ -48,8 +50,8 @@
     .exp.soon:hover { border-color: var(--line-strong); }
     .exp.soon .tag { background: var(--soft); border: 1px solid var(--line); color: var(--muted); }
 
-    @media (max-width: 760px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } .chip { margin-left: 0; } }
-    @media (max-width: 420px) { .pred { grid-template-columns: 84px minmax(0, 1fr); } .pred svg { width: 84px; height: 84px; } .pred strong { font-size: 32px; } }
+    @media (max-width: 760px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } .float.code, .float.next { margin-left: 0; margin-right: 0; } }
+    @media (max-width: 420px) { .stats { grid-template-columns: 1fr 1fr; } .stats div:last-child { grid-column: 1 / -1; } }
   </style>
 </head>
 <body>
@@ -74,30 +76,27 @@
         <p class="trust"><span>No sign-up</span><span>No uploads</span><span>No tracking</span></p>
       </div>
       <div>
-        <div class="stage" aria-label="Example prediction from the Animals + Human Classifier">
+        <div class="stage" aria-label="What is in the lab">
           <div class="float tilt">
-            <div class="pred">
-              <svg viewBox="0 0 112 112" aria-hidden="true">
-                <path d="M30 44 36 18 52 36M82 44 76 18 60 36" fill="#fff" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
-                <circle cx="56" cy="60" r="30" fill="#fff" stroke="#111" stroke-width="3"/>
-                <ellipse cx="45" cy="56" rx="4" ry="6" fill="#111"/><ellipse cx="67" cy="56" rx="4" ry="6" fill="#111"/>
-                <path d="M52 68h8l-4 5z" fill="#111"/><path d="M56 73v4M48 80q8 5 16 0" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M22 64h16M22 72h16M74 64h16M74 72h16" stroke="#111" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <div><small>Prediction</small><strong>Cat</strong><em>97.2% confident</em></div>
-            </div>
-            <div class="rows" aria-hidden="true">
-              <div class="row top"><span>Cat</span><i><b style="width:97%"></b></i><span>97.2%</span></div>
-              <div class="row"><span>Dog</span><i><b style="width:2%"></b></i><span>1.9%</span></div>
-              <div class="row"><span>Unknown</span><i><b style="width:1%"></b></i><span>0.9%</span></div>
+            <div class="lab-head"><span class="lab-tag">Experiment 01 · Image AI</span><span class="live"><i></i>Live</span></div>
+            <b class="lab-title">Animals + Human Classifier</b>
+            <div class="stats">
+              <div><strong>94.8%</strong><small>test accuracy</small></div>
+              <div><strong>99.0%</strong><small>right when it answers</small></div>
+              <div><strong>90.6%</strong><small>never-seen pictures caught as Unknown</small></div>
             </div>
           </div>
-          <div class="float chip">
-            <span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-            <div><b>Runs on your device</b><small>0 photos uploaded</small></div>
+          <div class="float code" aria-hidden="true">
+<pre><span class="c">// runs in your browser</span>
+<span class="k">const</span> model = <span class="k">await</span> loadModel();
+<span class="k">const</span> answer = model.predict(photo);</pre>
+          </div>
+          <div class="float next">
+            <span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 14h9"/></svg></span>
+            <div><b>Experiment 02</b><small>In the lab. Coming soon.</small></div>
           </div>
         </div>
-        <p class="demo">Example result shown.</p>
+        <p class="demo">Numbers from the classifier's published report.</p>
       </div>
     </section>
 
