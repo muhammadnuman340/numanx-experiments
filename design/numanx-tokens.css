@@ -1,0 +1,86 @@
+/* NumanX design system — tokens. Source of truth: the NumanX design system (tokens.json). Light is the default. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap");
+
+:root{
+  color-scheme: light;
+  --surface: #ffffff;
+  --surface-soft: #fafaf8;
+  --ink: #111111;
+  --ink-muted: #5c5c5c;
+  --line: #ececea;
+  --line-strong: #8c8c86;
+  --accent: #ffc414;
+  --accent-soft: #fff8df;
+  --on-accent: #111111;
+  --focus: #111111;
+  --whatsapp: #1faa59;
+  --whatsapp-strong: #157a3f;
+  --danger: #cc2f24;
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-18: 76px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+  --shadow-float: 0 18px 36px -20px rgba(0,0,0,.35);
+  --shadow-offset: 6px 6px 0 #ffc414;
+  --stage: radial-gradient(circle, rgba(17,17,17,.13) 1.3px, transparent 1.6px) 0 0/18px 18px, linear-gradient(150deg, #ffd447, #ffbf00);
+}
+
+/* Optional dark theme: only if a site offers a toggle. The site still opens in light. */
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface: #121210;
+  --surface-soft: #1a1916;
+  --ink: #f2efe6;
+  --ink-muted: #b7b2a6;
+  --line: #2c2a24;
+  --line-strong: #6b675e;
+  --accent-soft: #2a2410;
+  --focus: #ffd85a;
+  --whatsapp: #2bc06a;
+  --whatsapp-strong: #2bc06a;
+  --danger: #ff6b5e;
+}
+
+/* Base */
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--surface);color:var(--ink);font:16px/1.6 var(--font-sans);overflow-x:clip}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.08;text-wrap:balance;margin:0}
+h1{font-weight:900;font-size:clamp(36px,5vw,60px)}
+h2{font-weight:800;font-size:clamp(26px,3.2vw,38px)}
+h3{font-weight:700;font-size:20px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;box-shadow:0 0 0 5px rgba(255,196,20,.45)}
+
+/* Components */
+.nx-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:var(--radius-md);font:700 16px var(--font-display);border:1.5px solid transparent;cursor:pointer;text-decoration:none}
+.nx-btn--primary{background:var(--ink);color:var(--surface)}
+.nx-btn--secondary{background:var(--surface);color:var(--ink);border-color:var(--ink)}
+.nx-btn--whatsapp{background:var(--whatsapp-strong);color:#fff}
+.nx-chip{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--surface);font:500 14px var(--font-sans)}
+.nx-chip:hover{border-color:var(--ink)}
+.nx-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-6);transition:border-color .15s}
+.nx-card:hover{border-color:var(--ink)}
+.nx-card--featured{border:2px solid var(--ink);box-shadow:var(--shadow-offset)}
+.nx-input{width:100%;min-height:46px;padding:0 12px;border:1.5px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);color:var(--ink);font:16px var(--font-sans)}
+.nx-icon-tile{width:40px;height:40px;border-radius:var(--radius-md);background:var(--surface-soft);border:1px solid var(--line);display:grid;place-items:center}
+.nx-stage{background:var(--stage);border-radius:var(--radius-xl);padding:clamp(18px,3vw,34px)}
+.nx-float{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-float)}
+.nx-band{padding:clamp(48px,5vw,76px) max(5vw,16px)}
+.nx-band--soft{background:var(--surface-soft)}
+.nx-wrap{max-width:1180px;margin:0 auto}
+.nx-nav{position:sticky;top:0;z-index:20;height:64px;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.nx-logo{display:inline-flex;align-items:center;gap:10px;font:800 18px var(--font-display);color:var(--ink);text-decoration:none}
+.nx-logo i{width:32px;height:32px;border-radius:var(--radius-md);background:var(--ink);color:var(--accent);display:grid;place-items:center;font:900 16px var(--font-display);font-style:normal}
+.nx-step-num{width:48px;height:48px;border-radius:50%;background:var(--ink);color:var(--accent);display:grid;place-items:center;font:900 20px var(--font-display)}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}

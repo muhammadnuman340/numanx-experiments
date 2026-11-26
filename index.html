@@ -5,48 +5,109 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NumanX Experiments</title>
   <meta name="description" content="Small machine learning and web experiments by NumanX Studio. Everything runs in your browser.">
+  <link rel="icon" href="assets/numanx-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/site.css">
   <style>
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 8px; }
-    .exp { display: block; padding: 20px; text-decoration: none; color: var(--ink); transition: border-color .15s; }
-    .exp:hover { border-color: var(--muted); }
-    .exp .tag { display: inline-block; font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase;
-      color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 999px; margin-bottom: 12px; }
-    .exp p { margin: 0 0 14px; color: var(--muted); font-size: 15px; }
-    .exp .meta { font: 13px var(--mono); color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; }
-    .exp.soon { border-style: dashed; color: var(--muted); }
-    .exp.soon:hover { border-color: var(--line); }
-    .exp .go { display: inline-block; margin-top: 14px; font-weight: 600; font-size: 15px; color: var(--accent); }
-    .exp:hover .go { text-decoration: underline; text-underline-offset: 3px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; }
+    .trust { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; color: var(--muted); font-size: 15px; font-weight: 500; }
+    .trust span::before { content: "✓ "; color: var(--ok); font-weight: 700; }
+
+    .stage { position: relative; border-radius: 32px; padding: clamp(18px, 3vw, 30px); display: grid; gap: 14px;
+      background: radial-gradient(circle, rgba(17,17,17,.13) 1.3px, transparent 1.6px) 0 0 / 18px 18px, linear-gradient(150deg, #ffd447, #ffbf00); }
+    .float { background: #fff; color: #111; border-radius: 16px; box-shadow: var(--shadow-float); padding: 16px 18px; }
+    .float.tilt { transform: rotate(-1.2deg); }
+    .lab-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .lab-tag { font: 700 12px var(--font-display); background: #ffc414; color: #111; padding: 3px 9px; border-radius: 8px; }
+    .live { display: inline-flex; align-items: center; gap: 6px; font: 600 12px var(--sans); color: #157a3f; }
+    .live i { width: 8px; height: 8px; border-radius: 50%; background: #157a3f; }
+    .lab-title { display: block; font: 800 20px/1.15 var(--font-display); letter-spacing: -.02em; margin: 10px 0 12px; }
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .stats div { background: #fafaf8; border: 1px solid #ececea; border-radius: 12px; padding: 10px; }
+    .stats div:first-child { background: #fff8df; border-color: #ffe08a; }
+    .stats strong { display: block; font: 900 24px/1 var(--font-display); letter-spacing: -.02em; color: #111; }
+    .stats small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.3; color: #5c5c5c; }
+    .float.code { background: #111; color: #e9e6dc; margin-left: 28px; padding: 0; overflow: hidden; }
+    .float.code pre { margin: 0; padding: 14px 16px; font: 12.5px/1.6 var(--mono); white-space: pre; overflow-x: auto; }
+    .code .c { color: #8c8c86; } .code .k { color: #ffd447; } .code .s { color: #8fd19e; }
+    .float.next { display: flex; align-items: center; gap: 12px; margin-right: 40px; border: 2px dashed #8c8c86; box-shadow: none; background: rgba(255,255,255,.85); }
+    .next .ic { width: 34px; height: 34px; border-radius: 10px; background: #111; color: #ffc414; display: grid; place-items: center; flex: none; }
+    .next b { display: block; font: 700 14px var(--font-display); }
+    .next small { color: #5c5c5c; font-size: 13px; }
+    .demo { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin: 28px 0 18px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .exp { display: grid; gap: 10px; align-content: start; padding: 22px; text-decoration: none; color: var(--ink); transition: border-color .15s; }
+    .exp:hover { border-color: var(--ink); }
+    .exp .tag { justify-self: start; font: 700 13px var(--font-display); color: #111; background: var(--yellow); padding: 4px 10px; border-radius: 8px; }
+    .exp h2 { margin: 0; font-size: 22px; }
+    .exp p { margin: 0; color: var(--muted); font-size: 15px; }
+    .exp .meta { display: flex; gap: 8px; flex-wrap: wrap; }
+    .exp .meta span { font: 500 13px var(--sans); color: var(--ink); background: var(--soft); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
+    .exp .go { margin-top: 6px; font: 700 16px var(--font-display); text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+    .exp.soon { border-style: dashed; border-color: var(--line-strong); }
+    .exp.soon:hover { border-color: var(--line-strong); }
+    .exp.soon .tag { background: var(--soft); border: 1px solid var(--line); color: var(--muted); }
+
+    @media (max-width: 760px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } .float.code, .float.next { margin-left: 0; margin-right: 0; } }
+    @media (max-width: 420px) { .stats { grid-template-columns: 1fr 1fr; } .stats div:last-child { grid-column: 1 / -1; } }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="./">NumanX <small>Experiments</small></a>
+      <a class="brand" href="./"><img src="assets/numanx-mark.svg" alt="" width="32" height="32">NumanX <small>Experiments</small></a>
       <nav aria-label="Experiments">
         <a href="./" aria-current="page">All experiments</a>
         <a href="./animal-classifier/">Try it</a>
         <a href="./animal-classifier/report/">Report</a>
-        <a href="https://numanxstudio.com">numanxstudio.com</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="hero">
-      <p class="eyebrow">Lab</p>
-      <h1>Experiments</h1>
-      <p class="lead">Small machine learning and web projects. They run entirely in your browser: nothing you try here is uploaded anywhere.</p>
+    <section class="hero hero-grid">
+      <div>
+        <p class="eyebrow">Lab</p>
+        <h1>Machine learning you can try in your browser.</h1>
+        <p class="lead">Small machine learning and web projects by NumanX Studio. They run entirely on your device, so nothing you try here is uploaded anywhere.</p>
+        <p class="hero-actions"><a class="btn primary" href="animal-classifier/">Try the classifier</a><a class="btn" href="animal-classifier/report/">Read the report</a></p>
+        <p class="trust"><span>No sign-up</span><span>No uploads</span><span>No tracking</span></p>
+      </div>
+      <div>
+        <div class="stage" aria-label="What is in the lab">
+          <div class="float tilt">
+            <div class="lab-head"><span class="lab-tag">Experiment 01 · Image AI</span><span class="live"><i></i>Live</span></div>
+            <b class="lab-title">Animals + Human Classifier</b>
+            <div class="stats">
+              <div><strong>94.8%</strong><small>test accuracy</small></div>
+              <div><strong>99.0%</strong><small>right when it answers</small></div>
+              <div><strong>90.6%</strong><small>never-seen pictures caught as Unknown</small></div>
+            </div>
+          </div>
+          <div class="float code" aria-hidden="true">
+<pre><span class="c">// runs in your browser</span>
+<span class="k">const</span> model = <span class="k">await</span> loadModel();
+<span class="k">const</span> answer = model.predict(photo);</pre>
+          </div>
+          <div class="float next">
+            <span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6L5 18a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3"/><path d="M7.5 14h9"/></svg></span>
+            <div><b>Experiment 02</b><small>In the lab. Coming soon.</small></div>
+          </div>
+        </div>
+        <p class="demo">Numbers from the classifier's published report.</p>
+      </div>
     </section>
 
+    <div class="section-head"><h2 style="margin:0">Experiments</h2></div>
     <section class="grid" aria-label="Experiments">
       <a class="card exp" href="animal-classifier/">
         <span class="tag">Image AI · Live demo</span>
         <h2>Animals + Human Classifier</h2>
         <p>Upload a photo or use your camera. It recognises 10 animals and humans, says "Unknown" for everything else, and explains every answer.</p>
         <div class="meta"><span>MobileNetV2</span><span>94.8% test accuracy</span><span>13 classes</span></div>
-        <span class="go">Try it live →</span>
+        <span class="go">Try it live</span>
       </a>
       <div class="card exp soon" aria-hidden="true">
         <span class="tag">Coming next</span>
@@ -58,6 +119,7 @@
 
   <footer>
     <div class="wrap">
+      <div class="family"><b>More from NumanX Studio</b><a href="https://toolshub.numanxstudio.com">NumanX Tools Hub</a><a href="https://converter.numanxstudio.com">NumanX Converter</a></div>
       <span>© NumanX Studio</span>
       <span>Runs on your device. No tracking, no uploads.</span>
     </div>
